@@ -1,0 +1,11 @@
+///////////////////////////////////////////////////////////////////////////////////
+# I N S T A L A C I O N   D E   P O S T G R E S Q L   C L U S T E R 
+///////////////////////////////////////////////////////////////////////////////////
+
+#Instalar CloudNativePG
+curl -sSfL \
+  https://raw.githubusercontent.com/cloudnative-pg/artifacts/main/manifests/operator-manifest.yaml | \
+  kubectl apply --server-side -f -
+
+#Deployar PostgreSQL Cluster
+kubectl apply -f 
