@@ -18,16 +18,4 @@ spec:
           image: edenhill/kcat:1.7.0
           command: ["/bin/sh"]
           args: ["-c", "trap : TERM INT; sleep 1000 & wait"]
-          
-kubectl exec --stdin --tty kcat-59dfc96dd-d6g9f -- /bin/sh 
-         
-#echo "Test Message" | kcat -P -b kafka:29092 -t testtopic -p -1
-#echo "Test Message" | kcat -P -b kafka.kafka.svc.cluster.local:29092 -t testtopic -p -1
-kafka.kafka.svc.cluster.local:9092
 
-kcat -C -b kafka.kafka.svc.cluster.local:29092 -t testtopic -p -1
-
-
-
-#echo "Test Message" | kcat -P -b kafka.kafka.svc.cluster.local:9092 -t testtopic -p -1
-#kcat -C -b kafka.kafka.svc.cluster.local:9092 -t testtopic -p -1
