@@ -1,1 +1,25 @@
+////////////////////////////////////////////////////////////////
+# I N S T A L A C I O N   D E   K A F K A
+////////////////////////////////////////////////////////////////
 
+#Deployar Zookeper y Kafka como Statefulsets
+
+kubectl apply -f https://github.com/tailorwr/repository/blob/e088ac0f3144e979cc7f9752b03a0f020ffd66e2/finamer/dev/plataforma/kafka/yaml/Kafka_deployment.yml
+
+#Verificar funcionamiento
+
+kubectl apply -f https://github.com/tailorwr/repository/blob/da7b3a3f2c5cf22ecb4b0580d4469332867890c0/finamer/dev/plataforma/kafka/yaml/test-kafka.yml
+
+
+kubectl exec --stdin --tty kcat-59dfc96dd-d6g9f -- /bin/sh 
+         
+#echo "Test Message" | kcat -P -b kafka:29092 -t testtopic -p -1
+#echo "Test Message" | kcat -P -b kafka.kafka.svc.cluster.local:29092 -t testtopic -p -1
+kafka.kafka.svc.cluster.local:9092
+
+kcat -C -b kafka.kafka.svc.cluster.local:29092 -t testtopic -p -1
+
+
+
+#echo "Test Message" | kcat -P -b kafka.kafka.svc.cluster.local:9092 -t testtopic -p -1
+#kcat -C -b kafka.kafka.svc.cluster.local:9092 -t testtopic -p -1
