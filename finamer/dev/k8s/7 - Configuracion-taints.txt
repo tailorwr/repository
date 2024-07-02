@@ -1,0 +1,9 @@
+///////////////////////////////////////////////////////////////////////////////////
+# A S I G N A R   N O D O S   P A R A  B D D  Y  A P P
+///////////////////////////////////////////////////////////////////////////////////
+kubectl taint nodes ecdssrv01 CriticalAddonsOnly=true:NoExecute
+kubectl taint nodes ecdssrv02 CriticalAddonsOnly=true:NoExecute
+kubectl label nodes ecdsagent01 role=app
+kubectl label nodes ecdsagent02 role=app
+kubectl taint nodes ecdsagent03 role=bdd:NoSchedule
+kubectl taint nodes ecdsagent04 role=bdd:NoSchedule
