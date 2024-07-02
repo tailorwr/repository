@@ -1,1 +1,23 @@
+# stop the software firewall
+sudo systemctl stop ufw
+sudo systemctl disable ufw
 
+# get updates, install nfs, and apply
+sudo apt update && sudo apt upgrade -y
+#sudo apt install nfs-common -y net-tools traceroute
+
+sudo apt-get install qemu-guest-agent -y
+sudo systemctl enable qemu-guest-agent
+sudo systemctl start qemu-guest-agent
+
+sudo apt install net-tools traceroute iputils-ping telnetd vim -y
+
+sudo timedatectl set-timezone "America/Guayaquil"
+sudo apt install  -y
+
+# clean up
+sudo apt autoremove -y
+
+#Expandir disco en caso de no usar todo el espacio asignado
+lsblk
+sudo lvresize --resizefs -l +100%FREE /dev/ubuntu-vg/ubuntu-lv
