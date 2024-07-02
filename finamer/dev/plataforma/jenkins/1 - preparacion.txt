@@ -1,0 +1,85 @@
+///////////////////////////////////////////////////////////////////////////////////
+#I N S T A L A C I O N   D E   J E N K I N S   E N   E L   N O D O   W O R K E R  1
+///////////////////////////////////////////////////////////////////////////////////
+
+##############
+# D O C K E R
+##############
+
+#Install docker en los nodos de app: ecdsagent01 (172.20.41.111) y ecdsagent01 (172.20.41.112)
+
+# Add Docker's official GPG key:
+sudo apt-get update
+sudo apt upgrade -y
+sudo apt-get install ca-certificates curl
+sudo install -m 0755 -d /etc/apt/keyrings
+sudo curl -fsSL https://download.docker.com/linux/ubuntu/gpg -o /etc/apt/keyrings/docker.asc
+sudo chmod a+r /etc/apt/keyrings/docker.asc
+
+# Add the repository to Apt sources:
+echo "deb [arch=$(dpkg --print-architecture) signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/ubuntu $(. /etc/os-release && echo "$VERSION_CODENAME") stable" | sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
+
+sudo apt-get update
+
+#To install the latest version, run:
+sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin -y
+
+#containerd config default | sudo tee /etc/containerd/config.toml > /dev/null 2>&1
+#sudo sed -i 's/SystemdCgroup \= false/SystemdCgroup \= true/g' /etc/containerd/config.toml
+sudo systemctl restart containerd
+sudo systemctl enable containerd
+
+sudo usermod -a -G docker $USER
+
+#Verificar instalacion:
+sudo docker run hello-world
+
+
+
+##################################
+#Configuracion de NFS para jenkins
+#################################
+
+#Instalar servidor NFS en el control-plane 1 ecdssrv01 (172.20.41.101)
+
+#https://howtoforge.es/como-instalar-el-servidor-y-el-cliente-nfs-en-ubuntu-22-04/
+#Instalar el paquete del servidor NFS
+sudo apt install nfs-kernel-server -y
+
+#Una vez finalizada la instalación del servidor NFS, comprueba y verifica el servicio del servidor NFS
+sudo systemctl is-enabled nfs-server
+sudo systemctl status nfs-server
+
+sudo mkdir -p /data/jenkins
+sudo chown -R nobody:nogroup /data/jenkins
+sudo chmod 777 /data/jenkins
+sudo vi /etc/exports
+
+#Escribir:
+/data/jenkins 172.20.41.0/24(rw,sync,no_root_squash,no_all_squash,no_subtree_check)
+
+#Aplicar cambios y reiniciar el servicio
+sudo exportfs -a
+sudo systemctl restart nfs-server
+sudo systemctl status nfs-server
+
+#verificar los directorios
+sudo exportfs -v
+
+
+#En los workers, instalar cliente NFS - ecdsagent01 (172.20.41.111) y ecdsagent01 (172.20.41.112):
+
+
+sudo apt update
+sudo apt install nfs-common -y
+
+
+#Crear el/los directorios en el servidor cliente y ejecutar
+sudo mkdir -p /data/jenkins
+sudo mount -t nfs 172.20.41.101:/data/jenkins /data/jenkins
+
+#Verificar los directorior montados
+sudo df -h
+
+sudo vi /etc/fstab
+172.20.41.101:/data/jenkins /data/jenkins  nfs     rw      0       0
