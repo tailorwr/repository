@@ -8,4 +8,4 @@ curl -sSfL \
   kubectl apply --server-side -f -
 
 #Deployar PostgreSQL Cluster
-kubectl apply -f 
+kubectl apply -f https://github.com/tailorwr/repository/blob/24c1fa960796bc9ac72b8c2757bb086ef7acdcd3/finamer/dev/plataforma/postgresql/postgreql-cluster.yaml
