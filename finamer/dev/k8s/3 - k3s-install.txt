@@ -7,7 +7,7 @@
 curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.10+k3s1 INSTALL_K3S_EXEC="--disable traefik,servicelb" K3S_KUBECONFIG_MODE="644" sh -s - server --node-taint CriticalAddonsOnly=true:NoExecute --cluster-init --secrets-encryption --tls-san=172.20.41.100
 
 sudo cat /var/lib/rancher/k3s/server/node-token
-#K1043daa2559e2af4c78a4321cfbfe615ec8cf0dc5fb9923e18ab334c0c3e43eb61::server:745c32f7f417fabd7768fa30ce281895
+#K10358e17f95723101306f699f8340105e371730fb21dcc059097bc81f385b8ec5a::server:a4a49ee75f3c54d18bc020e89172fad2
 
 export KUBECONFIG=/etc/rancher/k3s/k3s.yaml
 cp /etc/rancher/k3s/k3s.yaml .kube/config
@@ -21,9 +21,9 @@ cp /etc/rancher/k3s/k3s.yaml .kube/config
 
 #JOINING OTHERS CONTROL PLANE SERVERS:
 
-curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.10+k3s1 INSTALL_K3S_EXEC="--disable traefik,servicelb" K3S_KUBECONFIG_MODE="644" K3S_TOKEN=K1043daa2559e2af4c78a4321cfbfe615ec8cf0dc5fb9923e18ab334c0c3e43eb61::server:745c32f7f417fabd7768fa30ce281895 sh -s - server --node-taint CriticalAddonsOnly=true:NoExecute --secrets-encryption --server https://172.20.41.101:6443 --secrets-encryption --tls-san=172.20.41.100
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.10+k3s1 INSTALL_K3S_EXEC="--disable traefik,servicelb" K3S_KUBECONFIG_MODE="644" K3S_TOKEN=K10358e17f95723101306f699f8340105e371730fb21dcc059097bc81f385b8ec5a::server:a4a49ee75f3c54d18bc020e89172fad2 sh -s - server --node-taint CriticalAddonsOnly=true:NoExecute --secrets-encryption --server https://172.20.41.101:6443 --secrets-encryption --tls-san=172.20.41.100
 
 
 #JOINING AGENTS TO CLUSTER:
 
-curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.10+k3s1 K3S_TOKEN=K1043daa2559e2af4c78a4321cfbfe615ec8cf0dc5fb9923e18ab334c0c3e43eb61::server:745c32f7f417fabd7768fa30ce281895 sh -s - agent --server https://172.20.41.100:6443
+curl -sfL https://get.k3s.io | INSTALL_K3S_VERSION=v1.28.10+k3s1 K3S_TOKEN=K10358e17f95723101306f699f8340105e371730fb21dcc059097bc81f385b8ec5a::server:a4a49ee75f3c54d18bc020e89172fad2 sh -s - agent --server https://172.20.41.100:5443
