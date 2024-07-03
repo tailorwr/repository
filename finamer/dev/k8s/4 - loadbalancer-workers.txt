@@ -33,21 +33,21 @@ backend k3s-lb-http
         option tcp-check
         balance roundrobin
         default-server inter 10s downinter 5s
-        server worker01 172.20.41.110:80 check
-        server worker02 172.20.41.111:80 check
-        server worker03 172.20.41.120:80 check
-        server worker04 172.20.41.121:80 check
+        server worker01 172.20.41.110:32146 check
+        server worker02 172.20.41.111:32146 check
+        server worker03 172.20.41.120:32146 check
+        server worker04 172.20.41.121:32146 check
 
 
-backend k3s-lb-http
+backend k3s-lb-https
         mode tcp
         option tcp-check
         balance roundrobin
         default-server inter 10s downinter 5s
-        server worker01 172.20.41.110:443 check
-        server worker02 172.20.41.111:443 check
-        server worker03 172.20.41.120:443 check
-        server worker04 172.20.41.121:443 check
+        server worker01 172.20.41.110:30321 check
+        server worker02 172.20.41.111:30321 check
+        server worker03 172.20.41.120:30321 check
+        server worker04 172.20.41.121:30321 check
 
 
 backend k3s-lb-bdd
