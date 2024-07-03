@@ -7,7 +7,7 @@ kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resourc
 kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/25.0.1/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
 
 #Create namespace
-kubectl apply -f https://github.com/tailorwr/repository/blob/9d2fe3b13973a49a33bdae8335c52a25cac52a9d/finamer/dev/plataforma/keycloak/yaml/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/keycloak/yaml/namespace.yaml
 
 #Install Operator
 kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/25.0.1/kubernetes/kubernetes.yml -n keycloak
@@ -22,7 +22,7 @@ kubectl create secret tls keycloak-tls-secret --cert certificate.pem --key key.p
 #Deployar el keycloak
 
 # 1 - BDD
-kubectl apply -f https://github.com/tailorwr/repository/blob/50e3e6012f2c8a42f5a171d6991f0761c0920a98/finamer/dev/plataforma/keycloak/yaml/keycloak-postgresql.yaml
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/keycloak/yaml/keycloak-postgresql.yaml
 
 # 2 - APP
-kubectl apply -f https://github.com/tailorwr/repository/blob/cb9b2337f0267fb37f74f08dad97ed73300bd806/finamer/dev/plataforma/keycloak/yaml/keycloak-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/keycloak/yaml/keycloak-deployment.yaml
