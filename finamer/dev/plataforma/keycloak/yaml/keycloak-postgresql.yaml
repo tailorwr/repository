@@ -5,8 +5,8 @@ metadata:
   namespace: keycloak
 type: kubernetes.io/basic-auth
 data:
-  username: a2V5Y2xvYWsK
-  password: a2V5Y2xvYWsK
+  username: a2V5Y2xvYWs=
+  password: a2V5Y2xvYWs=
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
