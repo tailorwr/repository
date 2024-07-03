@@ -12,7 +12,7 @@ metadata:
   labels:
     app: rancher
     app.kubernetes.io/managed-by: Helm
-    chart: rancher-2.8.4
+    chart: rancher-2.8.5
     heritage: Helm
     release: rancher
   name: rancher
@@ -31,6 +31,6 @@ spec:
         path: /
         pathType: ImplementationSpecific
   tls:
-    - hosts:
-        - rancherdev.tailorw.net
-      secretName: tls-rancher-ingress
+  - hosts:
+    - rancherdev.tailorw.net
+    secretName: tls-rancher-ingress
