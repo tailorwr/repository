@@ -1,0 +1,5 @@
+////////////////////////////////////////
+# I N S T A L A C I O N   P G A D M I N
+///////////////////////////////////////
+
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/pgadmin/yaml/pgadmin-deployment.yaml
