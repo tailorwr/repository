@@ -4,4 +4,4 @@
 
 #Deployar Jenkins:
 
-kubectl apply -f 
+kubectl apply -f https://github.com/tailorwr/repository/blob/5f8676d6d8688932d33b5289c75912e00dd37620/finamer/dev/plataforma/jenkins/yaml/jenkins_deployment_full.yml
