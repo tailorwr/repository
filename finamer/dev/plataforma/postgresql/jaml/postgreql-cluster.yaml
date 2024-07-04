@@ -11,7 +11,7 @@ metadata:
 type: kubernetes.io/basic-auth
 data:
    username: YXBw
-   password: QWRtMW4xc3RyNGQwcioK
+   password: QWRtMW4xc3RyYWQwcio=
 ---
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
