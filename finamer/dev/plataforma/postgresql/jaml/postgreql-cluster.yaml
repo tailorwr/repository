@@ -27,16 +27,6 @@ spec:
          owner: app
          secret:
             name: cluster-zeus-user-secret
-          postInitSQL:
-          - CREATE DATABASE "finamer-cloudbridges"
-          - CREATE DATABASE "finamer-credit-card"
-          - CREATE DATABASE "finamer-identity"
-          - CREATE DATABASE "finamer-insis"
-          - CREATE DATABASE "finamer-invoicing"
-          - CREATE DATABASE "finamer-payments"
-          - CREATE DATABASE "finamer-payments"
-          - CREATE DATABASE "finamer-reposts"
-          - CREATE DATABASE "finamer-settings"
    postgresql:
       parameters:
          max_parallel_workers: "5"
