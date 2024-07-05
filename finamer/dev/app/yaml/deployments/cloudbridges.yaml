@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: cloudbridges
-          image: tailorw/fin-cloud-bridges:v1
+          image: tailorw/fin-cloud-bridges:dev
           imagePullPolicy: Always
           envFrom:
             - secretRef:
