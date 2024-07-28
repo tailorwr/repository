@@ -20,7 +20,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: rancherdev.tailorw.net
+  - host: rancherk3sdev.tailorw.net
     http:
       paths:
       - backend:
@@ -32,5 +32,5 @@ spec:
         pathType: ImplementationSpecific
   tls:
   - hosts:
-    - rancherdev.tailorw.net
+    - rancherk3sdev.tailorw.net
     secretName: tls-rancher-ingress
