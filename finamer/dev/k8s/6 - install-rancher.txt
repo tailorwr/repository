@@ -33,7 +33,7 @@ kubectl get ingress rancher -n cattle-system -o yaml
 ingressClassName: nginx
 
 #Aplicar cambios al ingress
-kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/k8s/yaml/rancher-ingress.yaml
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/k8s/yaml/rancher-ingress.yaml?token=GHSAT0AAAAAACUS75VQ4ULZYIV23JGB227WZVFXXSA
 
 #Verificar ingress
 kubectl describe ingress rancher -n cattle-system
