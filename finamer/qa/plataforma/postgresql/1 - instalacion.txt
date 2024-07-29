@@ -8,7 +8,7 @@ curl -sSfL \
   kubectl apply --server-side -f -
 
 #Deployar PostgreSQL Cluster
-kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/postgresql/jaml/postgreql-cluster.yaml
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/qa/plataforma/postgresql/jaml/postgreql-cluster.yaml
 
 
 #Eliminar el cluster creado
