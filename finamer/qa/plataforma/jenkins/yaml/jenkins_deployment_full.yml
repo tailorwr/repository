@@ -473,7 +473,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: "devopsdqa.tailorw.net"
+  - host: "devopsqa.tailorw.net"
     http:
       paths:
       - pathType: Prefix
