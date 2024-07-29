@@ -7,7 +7,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: cluster-postgres-user-secret
-  namespace: postgres-erp
+  namespace: postgres
 type: kubernetes.io/basic-auth
 data:
    username: YXBw
@@ -16,7 +16,7 @@ data:
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-   name: postgres
+   name: postgres-erp
    namespace: postgres
 spec:
    instances: 2
