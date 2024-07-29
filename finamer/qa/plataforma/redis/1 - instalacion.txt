@@ -2,4 +2,4 @@
 # I N S T A L A C I O N   D E   R E D I S
 ////////////////////////////////////////////////////////////////////
 
-kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/redis/yaml/redis-deployment.yaml
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/qa/plataforma/redis/yaml/redis-deployment.yaml
