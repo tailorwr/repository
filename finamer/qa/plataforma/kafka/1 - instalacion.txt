@@ -4,11 +4,11 @@
 
 #Deployar Zookeper y Kafka como Statefulsets
 
-kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/kafka/yaml/Kafka_deployment.yml?token=GHSAT0AAAAAACUS75VRX7NEBZOFFRJUUPGEZVFX5RA
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/qa/plataforma/kafka/yaml/Kafka_deployment.yml
 
 #Verificar funcionamiento
 
-kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/kafka/yaml/test-kafka.yml?token=GHSAT0AAAAAACUS75VQEQH6BPI2OE5NIYEMZVFX6BQ
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/qa/plataforma/kafka/yaml/test-kafka.yml
 
 
 kubectl exec --stdin --tty kcat-59dfc96dd-d6g9f -- /bin/sh 
