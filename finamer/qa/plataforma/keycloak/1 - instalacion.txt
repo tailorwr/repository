@@ -7,7 +7,7 @@ kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resourc
 kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/25.0.1/kubernetes/keycloakrealmimports.k8s.keycloak.org-v1.yml
 
 #Create namespace
-kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/keycloak/yaml/namespace.yaml
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/qa/plataforma/keycloak/yaml/namespace.yaml
 
 #Install Operator
 kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/25.0.1/kubernetes/kubernetes.yml -n keycloak
@@ -16,7 +16,7 @@ kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resourc
 kubectl apply -f https://raw.githubusercontent.com/keycloak/keycloak-k8s-resources/20.0.0/kubernetes/kubernetes.yml
 
 #Crear certificados autofirmados
-openssl req -subj '/CN=authdev.tailorw.net/O=Tailorw./C=EC' -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out certificate.pem
+openssl req -subj '/CN=authqa.tailorw.net/O=Tailorw./C=EC' -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out certificate.pem
 
 #Crear un secret del tipo TLS con informacion de los certificados
 kubectl create secret tls keycloak-tls-secret --cert certificate.pem --key key.pem -n keycloak
@@ -25,7 +25,7 @@ kubectl create secret tls keycloak-tls-secret --cert certificate.pem --key key.p
 #Deployar el keycloak
 
 # 1 - BDD
-kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/keycloak/yaml/keycloak-postgresql.yaml
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/qa/plataforma/keycloak/yaml/keycloak-postgresql.yaml
 
 # 2 - APP
 kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/keycloak/yaml/keycloak-deployment.yaml

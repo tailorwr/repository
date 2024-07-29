@@ -17,7 +17,7 @@ spec:
   http:
     tlsSecret: keycloak-tls-secret
   hostname:
-    hostname: authdev.tailorw.net
+    hostname: authqa.tailorw.net
   proxy:
     headers: xforwarded
   ingress:
