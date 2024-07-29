@@ -40,7 +40,7 @@ sudo docker run hello-world
 #Configuracion de NFS para jenkins
 #################################
 
-#Instalar servidor NFS en el control-plane 1 ecdssrv01 (172.20.41.101)
+#Instalar servidor NFS en el control-plane 1 ectssrv01 (172.20.1.101)
 
 #https://howtoforge.es/como-instalar-el-servidor-y-el-cliente-nfs-en-ubuntu-22-04/
 #Instalar el paquete del servidor NFS
@@ -56,7 +56,7 @@ sudo chmod 777 /data/jenkins
 sudo vi /etc/exports
 
 #Escribir:
-/data/jenkins 172.20.41.0/24(rw,sync,no_root_squash,no_all_squash,no_subtree_check)
+/data/jenkins 172.20.1.0/24(rw,sync,no_root_squash,no_all_squash,no_subtree_check)
 
 #Aplicar cambios y reiniciar el servicio
 sudo exportfs -a
@@ -67,7 +67,7 @@ sudo systemctl status nfs-server
 sudo exportfs -v
 
 
-#En los workers, instalar cliente NFS - ecdsagent01 (172.20.41.111) y ecdsagent01 (172.20.41.112):
+#En los workers, instalar cliente NFS - ecdsagent01 (172.20.1.111) y ecdsagent01 (172.20.1.112):
 
 
 sudo apt update
@@ -76,10 +76,10 @@ sudo apt install nfs-common -y
 
 #Crear el/los directorios en el servidor cliente y ejecutar
 sudo mkdir -p /data/jenkins
-sudo mount -t nfs 172.20.41.101:/data/jenkins /data/jenkins
+sudo mount -t nfs 172.20.1.101:/data/jenkins /data/jenkins
 
 #Verificar los directorior montados
 sudo df -h
 
 sudo vi /etc/fstab
-172.20.41.101:/data/jenkins /data/jenkins  nfs     rw      0       0
+172.20.1.101:/data/jenkins /data/jenkins  nfs     rw      0       0
