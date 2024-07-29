@@ -22,11 +22,11 @@ data:
       {
         "Servers": {
           "1": {
-             "Name": "PostgresProd Cluster",
+             "Name": "PostgresERP Cluster",
              "Group": "Servers",
              "Port": 5432,
              "Username": "app", # username of our cluster PostgreSQL instance
-             "Host": "zeus-rw.postgres-prod.svc.cluster.local", # the url to connect to PostgreSQL instance, in this case we will connect to primary instance
+             "Host": "postgres-erp-rw.postgres.svc.cluster.local", # the url to connect to PostgreSQL instance, in this case we will connect to primary instance
              "SSLMode": "prefer",
              "MaintenanceDB": "app" # the default DB to connect in our cluster PostgreSQL instance
           }
@@ -141,7 +141,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: "pgadmindev.tailorw.net"
+  - host: "pgadminqa.tailorw.net"
     http:
       paths:
       - pathType: Prefix
@@ -153,5 +153,5 @@ spec:
               number: 80
   tls:
   - hosts:
-    - pgadmindev.tailorw.net
+    - pgadminqa.tailorw.net
     secretName: tls
