@@ -20,7 +20,7 @@ spec:
         workload.user.cattle.io/workloadselector: apps.deployment-finamer-registry
     spec:
       containers:
-        - image: tailorw/fin-registry:dev
+        - image: tailorw/fin-registry:v1
           imagePullPolicy: Always
           name: finamer-registry
           ports:
