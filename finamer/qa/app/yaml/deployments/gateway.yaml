@@ -8,6 +8,7 @@ spec:
   selector:
     matchLabels:
       workload.user.cattle.io/workloadselector: apps.deployment-finamer-gateway
+      app: gateway
   strategy:
     rollingUpdate:
       maxSurge: 25%
