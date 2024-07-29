@@ -1,0 +1,32 @@
+#Namespace:
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/namespace.yaml
+
+#Secrets:
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/secrets/cloudbridges-secret.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/secrets/config-secret.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/secrets/creditCard-secret.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/secrets/gateway-secret.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/secrets/identity-secret.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/secrets/insis-secret.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/secrets/invoicing-secret.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/secrets/payments-secret.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/secrets/report-secret.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/secrets/settings-secret.yaml
+
+#Deployments:
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/deployments/cloudbridges.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/deployments/config.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/deployments/creditCard.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/deployments/gateway.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/deployments/identity.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/deployments/insis.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/deployments/invoicing.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/deployments/payments.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/deployments/registry.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/deployments/report.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/deployments/settings.yaml
+
+#Services:
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/services/config-service.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/services/gateway-service.yaml
+kubectl apply -n finamer -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/app/yaml/services/registry-service.yaml

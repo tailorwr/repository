@@ -1,0 +1,73 @@
+/////////////////////////////////////////////////////////////
+#CONFIGURACION DE LOAD BALANCER EN CONTROL PLANE CON HAPROXY Y KEEPALIVED:
+/////////////////////////////////////////////////////////////
+#Instalar haproxy y keepalived
+sudo apt-get install haproxy keepalived -y
+
+#Editar los archivos de configuracion
+sudo vi /etc/haproxy/haproxy.cfg
+
+#Añadir lo siguiente:
+frontend k3s-frontend
+    bind *:5443
+    mode tcp
+    option tcplog
+    default_backend k3s-backend
+
+backend k3s-backend
+    mode tcp
+    option tcp-check
+    balance roundrobin
+    default-server inter 10s downinter 5s
+    server srv01 172.20.1.101:6443 check
+    server srv02 172.20.1.102:6443 check
+	
+
+sudo vi /etc/keepalived/keepalived.conf
+
+#En MASTER:
+vrrp_script chk_haproxy {
+    script 'killall -0 haproxy' # faster than pidof
+    interval 2
+}
+
+vrrp_instance haproxy-vip {
+   interface ens18
+    state MASTER # MASTER on lb-1, BACKUP on lb-2
+    priority 200 # 200 on lb-1, 100 on lb-2
+
+    virtual_router_id 51
+
+    virtual_ipaddress {
+        172.20.1.150/24
+    }
+
+    track_script {
+        chk_haproxy
+    }
+}
+
+#En ESCLAVO:
+vrrp_script chk_haproxy {
+    script 'killall -0 haproxy' # faster than pidof
+    interval 2
+}
+
+vrrp_instance haproxy-vip {
+   interface ens18
+    state BACKUP # MASTER on lb-1, BACKUP on lb-2
+    priority 100 # 200 on lb-1, 100 on lb-2
+
+    virtual_router_id 51
+
+    virtual_ipaddress {
+        172.20.1.150/24
+    }
+
+    track_script {
+        chk_haproxy
+    }
+}
+
+sudo systemctl restart haproxy
+sudo systemctl restart keepalived

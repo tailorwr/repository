@@ -1,0 +1,105 @@
+///////////////////////////////////////////////////////////////
+#Configurar el LOAD BALANCER de los Workers:
+///////////////////////////////////////////////////////////////
+
+#Instalar vi para editar archivos de configuracion
+sudo apt-get install vim -y
+
+#Instalar haproxy y keepalived
+sudo apt-get install haproxy keepalived -y
+sudo vi /etc/haproxy/haproxy.cfg
+
+#Añadir lo siguiente:
+frontend k3s-lb-http
+        bind *:80
+        mode tcp
+        option tcplog
+        default_backend k3s-lb-http
+
+frontend k3s-lb-https
+        bind *:443
+        mode tcp
+        option tcplog
+        default_backend k3s-lb-https
+
+
+backend k3s-lb-http
+        mode tcp
+        option tcp-check
+        balance roundrobin
+        default-server inter 10s downinter 5s
+        server worker01 172.20.1.110:32146 check
+        server worker02 172.20.1.111:32146 check
+        server worker03 172.20.1.120:32146 check
+        server worker04 172.20.1.121:32146 check
+
+
+backend k3s-lb-https
+        mode tcp
+        option tcp-check
+        balance roundrobin
+        default-server inter 10s downinter 5s
+        server worker01 172.20.1.110:30321 check
+        server worker02 172.20.1.111:30321 check
+        server worker03 172.20.1.120:30321 check
+        server worker04 172.20.1.121:30321 check
+
+
+
+sudo vi /etc/keepalived/keepalived.conf
+
+#En MASTER:
+vrrp_script chk_haproxy {
+    script 'killall -0 haproxy' # faster than pidof
+    interval 2
+}
+
+vrrp_instance haproxy-vip {
+   interface ens18
+    state MASTER # MASTER on lb-1, BACKUP on lb-2
+    priority 200 # 200 on lb-1, 100 on lb-2
+
+    virtual_router_id 51
+
+    virtual_ipaddress {
+        172.20.1.100/24
+    }
+
+    track_script {
+        chk_haproxy
+    }
+}
+
+#En ESCLAVO:
+vrrp_script chk_haproxy {
+    script 'killall -0 haproxy' # faster than pidof
+    interval 2
+}
+
+vrrp_instance haproxy-vip {
+   interface ens18
+    state BACKUP # MASTER on lb-1, BACKUP on lb-2
+    priority 100 # 200 on lb-1, 100 on lb-2
+
+    virtual_router_id 51
+
+    virtual_ipaddress {
+        172.20.1.100/24
+    }
+
+    track_script {
+        chk_haproxy
+    }
+}
+
+sudo systemctl restart haproxy
+sudo systemctl restart keepalived
+
+#Para verificar:
+hostname -I
+#Detener keepalive en un servidor:
+sudo systemctl stop keepalived
+#verificar en el otro nodo
+
+#Iniciar keepalived
+sudo systemctl start keepalived

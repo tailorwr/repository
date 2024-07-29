@@ -1,0 +1,53 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: postgres-dev
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cluster-postgres-user-secret
+  namespace: postgres-dev
+type: kubernetes.io/basic-auth
+data:
+   username: YXBw
+   password: QWRtMW4xc3RyYWQwcio=
+---
+apiVersion: postgresql.cnpg.io/v1
+kind: Cluster
+metadata:
+   name: postgres
+   namespace: postgres-dev
+spec:
+   instances: 2
+   imageName: ghcr.io/cloudnative-pg/postgresql:16.3
+   bootstrap:
+      initdb:
+         database: app
+         owner: app
+         secret:
+            name: cluster-postgres-user-secret
+   postgresql:
+      parameters:
+         max_parallel_workers: "5"
+         max_replication_slots: "10"
+         max_worker_processes: "5"
+         shared_buffers: 4GB
+         wal_keep_size: 512MB
+         wal_log_hints: "on"
+         wal_receiver_timeout: 5s
+         wal_sender_timeout: 5s
+   storage:
+      size: 100Gi
+   resources:
+      limits:
+         cpu: "7"
+         memory: 13Gi
+      requests:
+         cpu: "4"
+         memory: 10Gi
+   affinity:
+      tolerations:
+      -   key: "role"
+          value: "bdd"
+          effect: "NoSchedule"
