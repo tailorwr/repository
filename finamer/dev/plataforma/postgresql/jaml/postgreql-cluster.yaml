@@ -1,13 +1,13 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: postgres-dev
+  name: postgres
 ---
 apiVersion: v1
 kind: Secret
 metadata:
   name: cluster-postgres-user-secret
-  namespace: postgres-dev
+  namespace: postgres
 type: kubernetes.io/basic-auth
 data:
    username: YXBw
@@ -16,8 +16,8 @@ data:
 apiVersion: postgresql.cnpg.io/v1
 kind: Cluster
 metadata:
-   name: postgres
-   namespace: postgres-dev
+   name: postgres-erp
+   namespace: postgres
 spec:
    instances: 2
    imageName: ghcr.io/cloudnative-pg/postgresql:16.3
