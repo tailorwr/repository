@@ -21,22 +21,17 @@ frontend k3s-lb-https
         mode tcp
         option tcplog
         default_backend k3s-lb-https
-		
-frontend k3s-lb-bdd
-        bind *:5432
-        mode tcp
-        option tcplog
-        default_backend k3s-lb-bdd
+
 
 backend k3s-lb-http
         mode tcp
         option tcp-check
         balance roundrobin
         default-server inter 10s downinter 5s
-        server worker01 172.20.41.110:32146 check
-        server worker02 172.20.41.111:32146 check
-        server worker03 172.20.41.120:32146 check
-        server worker04 172.20.41.121:32146 check
+        server worker01 172.20.41.110:32551 check
+        server worker02 172.20.41.111:32551 check
+        server worker03 172.20.41.120:32551 check
+        server worker04 172.20.41.121:32551 check
 
 
 backend k3s-lb-https
@@ -44,21 +39,11 @@ backend k3s-lb-https
         option tcp-check
         balance roundrobin
         default-server inter 10s downinter 5s
-        server worker01 172.20.41.110:30321 check
-        server worker02 172.20.41.111:30321 check
-        server worker03 172.20.41.120:30321 check
-        server worker04 172.20.41.121:30321 check
+        server worker01 172.20.41.110:31840 check
+        server worker02 172.20.41.111:31840 check
+        server worker03 172.20.41.120:31840 check
+        server worker04 172.20.41.121:31840 check
 
-
-backend k3s-lb-bdd
-        mode tcp
-        option tcp-check
-        balance roundrobin
-        default-server inter 10s downinter 5s
-        server worker01 172.20.41.110:32000 check
-        server worker02 172.20.41.111:32000 check
-        server worker03 172.20.41.120:32000 check
-        server worker04 172.20.41.121:32000 check
 
 sudo vi /etc/keepalived/keepalived.conf
 
