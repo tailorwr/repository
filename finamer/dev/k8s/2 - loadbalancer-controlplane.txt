@@ -9,7 +9,7 @@ sudo vi /etc/haproxy/haproxy.cfg
 
 #Añadir lo siguiente:
 frontend k3s-frontend
-    bind *:6443
+    bind *:5443
     mode tcp
     option tcplog
     default_backend k3s-backend
@@ -39,7 +39,7 @@ vrrp_instance haproxy-vip {
     virtual_router_id 51
 
     virtual_ipaddress {
-        172.20.41.100/24
+        172.20.41.150/24
     }
 
     track_script {
@@ -61,7 +61,7 @@ vrrp_instance haproxy-vip {
     virtual_router_id 51
 
     virtual_ipaddress {
-        172.20.41.100/24
+        172.20.41.150/24
     }
 
     track_script {
