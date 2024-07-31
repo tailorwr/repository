@@ -11,7 +11,7 @@ kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/fina
 kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/kafka/yaml/test-kafka.yml
 
 
-kubectl exec --stdin --tty kcat-59dfc96dd-d6g9f -- /bin/sh 
+kubectl exec --stdin --tty kcat-59dfc96dd-q9wx9 -- /bin/sh 
          
 #echo "Test Message" | kcat -P -b kafka:29092 -t testtopic -p -1
 #echo "Test Message" | kcat -P -b kafka.kafka.svc.cluster.local:29092 -t testtopic -p -1
