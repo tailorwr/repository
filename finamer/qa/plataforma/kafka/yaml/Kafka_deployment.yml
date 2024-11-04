@@ -142,6 +142,8 @@ spec:
             value: "2097152"
           - name: KAFKA_REPLICA_FETCH_MAX_BYTES
             value: "2097152"
+          - name: KAFKA_SOCKET_REQUEST_MAX_BYTES
+            value: "2097152"
         resources: {}
         volumeMounts:
           - mountPath: /var/lib/kafka/
