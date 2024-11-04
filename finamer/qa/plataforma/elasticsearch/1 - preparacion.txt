@@ -7,13 +7,13 @@
 ////////////////////////////////////
 
 #En el nodo principal (Master 01)
-sudo mkdir -p /data/elasticdev
-sudo chown -R nobody:nogroup /data/elasticdev
-sudo chmod 777 /data/elasticdev
+sudo mkdir -p /data/elastic
+sudo chown -R nobody:nogroup /data/elastic
+sudo chmod 777 /data/elastic
 sudo vi /etc/exports
 
 #Escribir:
-/data/elasticdev 172.20.41.0/24(rw,sync,no_root_squash,no_all_squash,no_subtree_check)
+/data/elastic 172.20.1.0/24(rw,sync,no_root_squash,no_all_squash,no_subtree_check)
 
 #Aplicar cambios y reiniciar el servicio
 sudo exportfs -a
@@ -28,11 +28,11 @@ sudo exportfs -v
 #Instalar cliente NFS
 
 #Crear el/los directorios en el servidor cliente y ejecutar
-sudo mkdir -p /data/elasticdev
-sudo mount -t nfs 172.20.41.101:/data/elasticdev /data/elasticdev
+sudo mkdir -p /data/elastic
+sudo mount -t nfs 172.20.1.101:/data/elastic /data/elastic
 
 #Verificar los directorior montados
 sudo df -h
 
 sudo vi /etc/fstab
-172.20.41.101:/data/elasticdev /data/elasticdev  nfs     rw      0       0
+172.20.1.101:/data/elastic /data/elastic  nfs     rw      0       0

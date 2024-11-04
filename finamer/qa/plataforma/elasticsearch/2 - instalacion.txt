@@ -4,7 +4,13 @@
 
 #Deployar ElasticSearch:
 
-kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/jenkins/yaml/jenkins_deployment_full.yml
-kubectl apply -f
-kubectl apply -f
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/refs/heads/main/finamer/qa/plataforma/elasticsearch/yaml/namespace.yaml
+kubectl apply -f https://github.com/tailorwr/repository/blob/main/finamer/qa/plataforma/elasticsearch/yaml/elasticsearch-deployment.yaml
+
+kubectl get pods -n elastic-dev
+kubectl exec -it elasticsearch-547f54bff7-7fbjj --bash -n elastic-dev
+bin/elasticsearch-service-tokens create elastic/kibana kibana-token
+SERVICE_TOKEN elastic/kibana/kibana-token = AAEAAWVsYXN0aWMva2liYW5hL2tpYmFuYS10b2tlbjpUcUNLR3M5T1I2aTFySlQ1TUEtT0dn
+
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/refs/heads/main/finamer/qa/plataforma/elasticsearch/yaml/kibana-deployment.yaml
 
