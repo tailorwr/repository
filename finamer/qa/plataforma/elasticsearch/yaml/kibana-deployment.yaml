@@ -22,7 +22,7 @@ spec:
             - name: ELASTICSEARCH_USERNAME
               value: "kibana_system"
             - name: ELASTICSEARCH_PASSWORD
-              value: "FyLshsU8YXPI_RtY8u+S"
+              value: "y8su200ccdS3NFrvjGrc"
           ports:
             - containerPort: 5601
       initContainers:
