@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    workload.user.cattle.io/workloadselector: apps.deployment-finamer-payment-client-app
+  name: payment-client-app
+  namespace: finamer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      workload.user.cattle.io/workloadselector: apps.deployment-finamer-payment-client-app
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: payment-client-app
+        workload.user.cattle.io/workloadselector: apps.deployment-finamer-payment-client-app
+      namespace: finamer
+    spec:
+      containers:
+        - env:
+            - name: AUTH_ORIGIN
+              value: https://payqa.tailorw.net
+            - name: VITE_APP_BASE_URL
+              value: http://gateway-service:8080
+            - name: AUTH_SECRET
+              value: some-secret-random-string
+            - name: CLIENT_USER
+              value: admin@tailorw.com
+            - name: CLIENT_PASS
+              value: Ecuador.*2024
+          image: tailorw/erp-payment-client:dev
+          imagePullPolicy: Always
+          name: payment-client-app
+          ports:
+            - containerPort: 3000
+              name: http
+              protocol: TCP
+          securityContext:
+            allowPrivilegeEscalation: false
+            privileged: false
+            readOnlyRootFilesystem: false
+            runAsNonRoot: false
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30

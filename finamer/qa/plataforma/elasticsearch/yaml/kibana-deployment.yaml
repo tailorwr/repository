@@ -1,0 +1,96 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: kibana
+  namespace: elastic-dev
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: kibana
+  template:
+    metadata:
+      labels:
+        app: kibana
+    spec:
+      containers:
+        - name: kibana
+          image: docker.elastic.co/kibana/kibana:8.8.2
+          env:
+            - name: ELASTICSEARCH_HOSTS
+              value: "http://elasticsearch:9200"
+            - name: ELASTICSEARCH_USERNAME
+              value: "kibana_system"
+            - name: ELASTICSEARCH_PASSWORD
+              value: "FyLshsU8YXPI_RtY8u+S"
+          ports:
+            - containerPort: 5601
+      initContainers:
+        - name: wait-for-elasticsearch
+          image: busybox
+          command: ['sh', '-c', 'until nc -z elasticsearch 9200; do echo waiting for elasticsearch; sleep 2; done;']
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana
+  namespace: elastic-dev
+spec:
+  selector:
+    app: kibana
+  ports:
+    - protocol: TCP
+      port: 5601
+      targetPort: 5601
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kibana-np
+  namespace: elastic-dev
+  labels:
+    app: kibana
+spec:
+  type: NodePort
+  selector:
+    app: kibana
+  ports:
+  - protocol: TCP
+    port: 5601
+    targetPort: 5601
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: kibana-ingress
+  namespace: elastic-dev
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-set-headers: |
+      Host: $host
+      X-Forwarded-For: $proxy_add_x_forwarded_for
+      X-Forwarded-Host: $host
+      X-Forwarded-Port: $server_port
+      X-Forwarded-Proto: $scheme
+    nginx.ingress.kubernetes.io/enable-websockets: "true"
+    nginx.ingress.kubernetes.io/proxy-body-size: "50m"
+    nginx.ingress.kubernetes.io/proxy-read-timeout: "3600"
+    nginx.ingress.kubernetes.io/proxy-send-timeout: "3600"
+spec:
+  ingressClassName: nginx
+  defaultBackend:
+    service:
+      name: kibana
+      port:
+        number: 5601
+  rules:
+  -  host: kibanadev.tailorw.net
+     http:
+       paths:
+       -  pathType: Prefix
+          path: "/"
+          backend:
+            service:
+              name: kibana
+              port:
+                number: 5601

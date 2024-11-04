@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: config
-          image: tailorw/fin-config:v1
+          image: tailorw/fin-config:dev
           imagePullPolicy: Always
           ports:
             - containerPort: 8081

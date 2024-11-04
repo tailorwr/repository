@@ -1,34 +1,40 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: identity
+  name: audit
   namespace: finamer
 spec:
+  progressDeadlineSeconds: 600
   replicas: 1
+  revisionHistoryLimit: 10
   selector:
     matchLabels:
-      workload.user.cattle.io/workloadselector: apps.deployment-finamer-identity
+      workload.user.cattle.io/workloadselector: apps.deployment-finamer-audit
   strategy:
     rollingUpdate:
       maxSurge: 25%
       maxUnavailable: 25%
+    type: RollingUpdate
   template:
     metadata:
       labels:
-        app: identity
-        workload.user.cattle.io/workloadselector: apps.deployment-finamer-identity
+        app: audit
+        workload.user.cattle.io/workloadselector: apps.deployment-finamer-audit
+      namespace: finamer
     spec:
       containers:
-        - name: identity
-          image: tailorw/fin-identity:dev
+        - envFrom:
+            - secretRef:
+                name: audit-secret
+                optional: false
+          image: tailorw/erp-audit:qa
           imagePullPolicy: Always
+          name: audit
           ports:
-            - containerPort: 9905
+            - containerPort: 9909
               name: http
               protocol: TCP
-          envFrom:
-            - secretRef:
-                name: identity-secret
+          resources: {}
           securityContext:
             allowPrivilegeEscalation: false
             privileged: false

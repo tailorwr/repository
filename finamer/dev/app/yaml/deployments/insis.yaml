@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
         - name: insis
-          image: tailorw/fin-insis:v1
+          image: tailorw/fin-insis:dev
           imagePullPolicy: Always
           ports:
             - containerPort: 9905
