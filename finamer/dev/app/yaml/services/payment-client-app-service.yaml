@@ -1,0 +1,23 @@
+apiVersion: v1
+kind: Service
+metadata:
+  annotations:
+    field.cattle.io/targetWorkloadIds: '["finamer/payment-client-app"]'
+    management.cattle.io/ui-managed: 'true'
+  name: payment-client-app
+  namespace: finamer
+  ownerReferences:
+    - apiVersion: apps/v1
+      controller: true
+      kind: Deployment
+      name: payment-client-app
+      uid: 5b40d860-c47c-4a99-8ef5-df35d8a1d960
+spec:
+  type: ClusterIP
+  selector:
+    workload.user.cattle.io/workloadselector: apps.deployment-finamer-payment-client-app
+  ports:
+    - name: http
+      port: 3000
+      protocol: TCP
+      targetPort: 3000

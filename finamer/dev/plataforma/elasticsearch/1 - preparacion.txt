@@ -1,0 +1,38 @@
+///////////////////////////////////////////////////////////////////////////////////
+#I N S T A L A C I O N   D E   E L A S T I C   S E A R C H   Y   K I B A N A
+///////////////////////////////////////////////////////////////////////////////////
+
+/////////////////////////////////////
+#CONFIGURACION DE NFS
+////////////////////////////////////
+
+#En el nodo principal (Master 01)
+sudo mkdir -p /data/elasticdev
+sudo chown -R nobody:nogroup /data/elasticdev
+sudo chmod 777 /data/elasticdev
+sudo vi /etc/exports
+
+#Escribir:
+/data/elasticdev 172.20.41.0/24(rw,sync,no_root_squash,no_all_squash,no_subtree_check)
+
+#Aplicar cambios y reiniciar el servicio
+sudo exportfs -a
+sudo systemctl restart nfs-server
+sudo systemctl status nfs-server
+
+#verificar los directorios
+sudo exportfs -v
+
+#En el cliente:
+
+#Instalar cliente NFS
+
+#Crear el/los directorios en el servidor cliente y ejecutar
+sudo mkdir -p /data/elasticdev
+sudo mount -t nfs 172.20.41.101:/data/elasticdev /data/elasticdev
+
+#Verificar los directorior montados
+sudo df -h
+
+sudo vi /etc/fstab
+172.20.41.101:/data/elasticdev /data/elasticdev  nfs     rw      0       0

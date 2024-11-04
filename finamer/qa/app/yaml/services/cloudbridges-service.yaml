@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: cloudbridges
+  namespace: finamer
+spec:
+  type: ClusterIP
+  selector:
+    app: cloudbridges
+  ports:
+    - name: http
+      port: 9909
+      protocol: TCP
+      targetPort: 9909

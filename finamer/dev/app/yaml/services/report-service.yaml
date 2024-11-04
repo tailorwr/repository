@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: report
+  namespace: finamer
+spec:
+  type: ClusterIP
+  selector:
+    app: report
+  ports:
+    - name: http
+      port: 9908
+      protocol: TCP
+      targetPort: 9909

@@ -1,0 +1,10 @@
+//////////////////////////////////////////////////////////////////////
+#INSTALACION ELASTICSEARCH Y KIBANA KUBERNETES
+//////////////////////////////////////////////////////////////////////
+
+#Deployar ElasticSearch:
+
+kubectl apply -f https://raw.githubusercontent.com/tailorwr/repository/main/finamer/dev/plataforma/jenkins/yaml/jenkins_deployment_full.yml
+kubectl apply -f
+kubectl apply -f
+
