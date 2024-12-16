@@ -40,7 +40,7 @@ spec:
          memory: 6Gi
       requests:
          cpu: "2"
-         memory: 3Gi
+         memory: 4Gi
    affinity:
       tolerations:
       -   key: "role"
