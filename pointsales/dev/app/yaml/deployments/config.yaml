@@ -1,14 +1,13 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: registry
+  name: config
   namespace: pointsales
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: registry
-      workload.user.cattle.io/workloadselector: apps.deployment-pointsales-registry
+      workload.user.cattle.io/workloadselector: apps.deployment-pointsales-config
   strategy:
     rollingUpdate:
       maxSurge: 25%
@@ -16,16 +15,19 @@ spec:
   template:
     metadata:
       labels:
-        app: registry
-        workload.user.cattle.io/workloadselector: apps.deployment-pointsales-registry
+        app: config
+        workload.user.cattle.io/workloadselector: apps.deployment-pointsales-config
     spec:
       containers:
-        - image: tailorw/pointsales-registry:dev
+        - name: config
+          image: tailorw/pointsales-config:dev
           imagePullPolicy: Always
-          name: registry
           ports:
-            - containerPort: 8761
+            - containerPort: 8081
               protocol: TCP
+          envFrom:
+            - secretRef:
+                name: config-secret
       affinity:
         nodeAffinity:
           requiredDuringSchedulingIgnoredDuringExecution:
@@ -34,7 +36,7 @@ spec:
               - key: app.pointsales
                 operator: In
                 values:
-                - true
+                - "true"
       imagePullSecrets:
         - name: docker-hub
       restartPolicy: Always
