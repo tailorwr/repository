@@ -18,3 +18,8 @@ spec:
             name: gateway-service
             port:
               number: 80
+  defaultBackend:
+    service:
+      name: gateway-service
+      port:
+        number: 8080
