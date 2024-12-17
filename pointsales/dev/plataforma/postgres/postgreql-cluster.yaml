@@ -32,6 +32,7 @@ spec:
          wal_log_hints: "on"
          wal_receiver_timeout: 5s
          wal_sender_timeout: 5s
+         password_encryption: scram-sha-256
    storage:
       size: 50Gi
    resources:
@@ -42,6 +43,15 @@ spec:
          cpu: "2"
          memory: 4Gi
    affinity:
+      nodeAffinity:
+         requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+               - matchExpressions:
+                   - key: kubernetes.io/hostname
+                     operator: In
+                     values:
+                       - ecdsagent03
+                       - ecdsagent04
       tolerations:
       -   key: "role"
           value: "bdd"
