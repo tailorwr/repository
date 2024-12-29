@@ -34,7 +34,7 @@ spec:
               value: admin@tailorw.com
             - name: CLIENT_PASS
               value: Ecuador.*2024
-          image: tailorw/erp-payment-client:dev
+          image: tailorw/erp-payment-client:qa
           imagePullPolicy: Always
           name: payment-client-app
           ports:
