@@ -6,9 +6,12 @@ metadata:
 spec:
   instances: 1
   image: quay.io/keycloak/keycloak:25.0.1
+  startOptimized: false
   db:
     vendor: postgres
+    database: keycloak
     host: keycloak-cluster-rw.keycloak.svc.cluster.local
+    port: 5432
     usernameSecret:
       name: keycloak-postgres-user-secret
       key: username
@@ -23,4 +26,12 @@ spec:
     headers: xforwarded
   ingress:
     className: nginx
+  additionalOptions:
+    - name: db
+      value: postgres
+    - name: db-driver
+      value: org.postgresql.Driver
+    - name: db-url
+      value: "jdbc:postgresql://keycloak-cluster-rw.keycloak.svc.cluster.local:5432/keycloak"
+
 
