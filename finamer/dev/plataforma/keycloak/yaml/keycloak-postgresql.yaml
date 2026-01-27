@@ -23,20 +23,35 @@ spec:
          secret:
             name: keycloak-postgres-user-secret
    affinity:
+      nodeAffinity:
+         requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: kubernetes.io/hostname
+                operator: In
+                values:
+                - ecdsagent03
+                - ecdsagent04
+      podAntiAffinityType: preferred
       tolerations:
-      -   key: "role"
-          value: "bdd"
-          effect: "NoSchedule"
+      - key: "role"
+        operator: "Equal"
+        value: "bdd"
+        effect: "NoSchedule"
    postgresql:
       parameters:
-         shared_buffers: "256MB"
+         shared_buffers: "512MB"
+         effective_cache_size: "1536MB"
+         maintenance_work_mem: "128MB"
+         wal_buffers: "16MB"
    resources:
       requests:
          memory: 1Gi
-         cpu: 1
+         cpu: 500m
       limits:
          memory: 2Gi
-         cpu: 1
+         cpu: 2
    storage:
       size: 50Gi
+
 
