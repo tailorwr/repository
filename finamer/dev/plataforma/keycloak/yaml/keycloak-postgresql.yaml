@@ -53,5 +53,23 @@ spec:
          cpu: 2
    storage:
       size: 50Gi
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-cluster
+  namespace: keycloak
+spec:
+  type: NodePort
+  selector:
+    cnpg.io/cluster: keycloak-cluster
+    cnpg.io/instanceRole: primary
+  ports:
+  - name: postgres
+    nodePort: 32501
+    port: 5432
+    protocol: TCP
+    targetPort: 5432
+
 
 
