@@ -75,8 +75,6 @@ spec:
               value: "True"
             - name: PGADMIN_CONFIG_ALLOW_SAVE_PASSWORD
               value: "True"
-            - name: PGADMIN_CONFIG_SESSION_DB_PATH
-              value: /var/lib/pgadmin/sessions
           ports:
             - name: http
               containerPort: 80
