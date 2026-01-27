@@ -6,44 +6,41 @@ metadata:
 apiVersion: v1
 kind: Secret
 metadata:
-   name: pgadmin-secret
-   namespace: pgadmin
+  name: pgadmin-secret
+  namespace: pgadmin
 type: Opaque
 data:
-   pgadmin-password: U3VwZXJTZWNyZXQ=
+  pgadmin-password: U3VwZXJTZWNyZXQ=
 ---
 apiVersion: v1
 kind: ConfigMap
 metadata:
-   name: pgadmin-config
-   namespace: pgadmin
+  name: pgadmin-config
+  namespace: pgadmin
 data:
-   servers.json: |
-      {
-        "Servers": {
-          "1": {
-             "Name": "PostgresProd Cluster",
-             "Group": "Servers",
-             "Port": 5432,
-             "Username": "app", # username of our cluster PostgreSQL instance
-             "Host": "zeus-rw.postgres-prod.svc.cluster.local", # the url to connect to PostgreSQL instance, in this case we will connect to primary instance
-             "SSLMode": "prefer",
-             "MaintenanceDB": "app" # the default DB to connect in our cluster PostgreSQL instance
-          }
+  servers.json: |
+    {
+      "Servers": {
+        "1": {
+          "Name": "Postgres Cluster",
+          "Group": "Servers",
+          "Port": 5432,
+          "Username": "admindb",
+          "Host": "postgres-erp-rw.postgres.svc.cluster.local",
+          "SSLMode": "prefer",
+          "MaintenanceDB": "postgres"
         }
       }
+    }
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-   name: pgadmin
-   namespace: pgadmin
+  name: pgadmin
+  namespace: pgadmin
 spec:
-  serviceName: pgadmin-service
-  podManagementPolicy: Parallel
+  serviceName: pgadmin
   replicas: 1
-  updateStrategy:
-    type: RollingUpdate
   selector:
     matchLabels:
       app: pgadmin
@@ -64,25 +61,24 @@ spec:
       containers:
         - name: pgadmin
           image: dpage/pgadmin4:8.8
-          imagePullPolicy: Always
+          imagePullPolicy: IfNotPresent
           env:
             - name: PGADMIN_DEFAULT_EMAIL
-              value: admin@tailorw.com # the default username to login into PgAdmin
+              value: admin@tailorw.com
             - name: PGADMIN_DEFAULT_PASSWORD
               valueFrom:
                 secretKeyRef:
                   name: pgadmin-secret
                   key: pgadmin-password
-            - name: PGADMIN_CONFIG_ENHANCED_COOKIE_PROTECTION
-              value: 'False'
-            - name: PGADMIN_CONFIG_WTF_CSRF_CHECK_DEFAULT
-              value: 'False'
-            - name: PGADMIN_CONFIG_WTF_CSRF_ENABLED
-              value: 'False'
+            - name: PGADMIN_CONFIG_SERVER_MODE
+              value: "True"
+            - name: PGADMIN_CONFIG_ALLOW_SAVE_PASSWORD
+              value: "True"
+            - name: PGADMIN_CONFIG_SESSION_DB_PATH
+              value: /var/lib/pgadmin/sessions
           ports:
             - name: http
               containerPort: 80
-              protocol: TCP
           volumeMounts:
             - name: pgadmin-config
               mountPath: /pgadmin4/servers.json
@@ -106,30 +102,16 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-   name: pgadmin-service
-   namespace: pgadmin
+  name: pgadmin
+  namespace: pgadmin
 spec:
-   ports:
-   -   protocol: TCP
-       port: 80
-       targetPort: http
-   selector:
-      app: pgadmin
-   type: NodePort
----
-apiVersion: v1
-kind: Service
-metadata:
-   name: pgadmin-service-ext
-   namespace: pgadmin
-spec:
-   ports:
-   -   protocol: TCP
-       port: 80
-       targetPort: http
-   selector:
-      app: pgadmin
-   type: ClusterIP
+  type: ClusterIP
+  selector:
+    app: pgadmin
+  ports:
+    - name: http
+      port: 80
+      targetPort: http
 ---
 apiVersion: networking.k8s.io/v1
 kind: Ingress
@@ -137,21 +119,17 @@ metadata:
   name: pgadmin-ingress
   namespace: pgadmin
   annotations:
-    kubernetes.io/ingress.class: "nginx"
+    kubernetes.io/ingress.class: nginx
 spec:
   ingressClassName: nginx
   rules:
-  - host: "pgadmindev.tailorw.net"
-    http:
-      paths:
-      - pathType: Prefix
-        path: "/"
-        backend:
-          service:
-            name: pgadmin-service-ext
-            port:
-              number: 80
-  tls:
-  - hosts:
-    - pgadmindev.tailorw.net
-    secretName: tls
+    - host: pgadmin.tailorw.net
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service:
+                name: pgadmin
+                port:
+                  number: 80
