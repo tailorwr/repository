@@ -15,7 +15,7 @@ metadata:
    namespace: keycloak
 spec:
    instances: 2
-   imageName: ghcr.io/cloudnative-pg/postgresql:16.3
+   imageName: ghcr.io/cloudnative-pg/postgresql:16.11
    bootstrap:
       initdb:
          database: keycloak
@@ -39,3 +39,4 @@ spec:
          cpu: 1
    storage:
       size: 50Gi
+
