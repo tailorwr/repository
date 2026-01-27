@@ -5,6 +5,7 @@ metadata:
   namespace: keycloak
 spec:
   instances: 1
+  image: quay.io/keycloak/keycloak:25.0.1
   db:
     vendor: postgres
     host: keycloak-cluster-rw.keycloak.svc.cluster.local
@@ -22,3 +23,4 @@ spec:
     headers: xforwarded
   ingress:
     className: nginx
+
